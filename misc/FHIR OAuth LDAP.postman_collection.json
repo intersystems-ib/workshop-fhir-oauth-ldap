@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "185d5ec8-7333-4498-aaa2-53be6c4b9a66",
+		"name": "FHIR OAuth LDAP",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9468659"
+	},
+	"item": [
+		{
+			"name": "Patient Encounters",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "scope",
+							"value": "openid launch/patient/2 patient/Encounter.read patient/Patient.write",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "mOJvDXUOfJnOrmrILj-MI8E1mGzRv4oV_ebPZOgt-fk_wf70ffpFBu1HoL1iB1OCaIpdL2tqpfKcW7hhc4nd_A",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "eVRzFgq5zF0Pd3uZ3U4iqejgJvK5-Q7oPPwbcybeWEg",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "https://localhost/authserver/oauth2/authorize?aud=https://localhost/fhir/r4",
+							"type": "string"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://webserver/authserver/csp/sys/oauth2/OAuth2.Response.cls",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://localhost/authserver/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "state",
+							"value": "abc",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{irishost}}/fhir/r4/Encounter?subject=Patient/2",
+					"protocol": "https",
+					"host": [
+						"{{irishost}}"
+					],
+					"path": [
+						"fhir",
+						"r4",
+						"Encounter"
+					],
+					"query": [
+						{
+							"key": "subject",
+							"value": "Patient/2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Patient",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "clientSecret",
+							"value": "mOJvDXUOfJnOrmrILj-MI8E1mGzRv4oV_ebPZOgt-fk_wf70ffpFBu1HoL1iB1OCaIpdL2tqpfKcW7hhc4nd_A",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "eVRzFgq5zF0Pd3uZ3U4iqejgJvK5-Q7oPPwbcybeWEg",
+							"type": "string"
+						},
+						{
+							"key": "scope",
+							"value": "openid user/*.read",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "https://localhost/authserver/oauth2/authorize?aud=https://localhost/fhir/r4",
+							"type": "string"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://webserver/authserver/csp/sys/oauth2/OAuth2.Response.cls",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://localhost/authserver/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "state",
+							"value": "abc",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{irishost}}/fhir/r4/Patient/3",
+					"protocol": "https",
+					"host": [
+						"{{irishost}}"
+					],
+					"path": [
+						"fhir",
+						"r4",
+						"Patient",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Capability Statement",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{irishost}}:{{port}}/fhir/r4/metadata",
+					"protocol": "http",
+					"host": [
+						"{{irishost}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"fhir",
+						"r4",
+						"metadata"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Patients",
+			"request": {
+				"auth": {
+					"type": "oauth2",
+					"oauth2": [
+						{
+							"key": "scope",
+							"value": "user/*.read",
+							"type": "string"
+						},
+						{
+							"key": "clientSecret",
+							"value": "24p1PaB1LSaftbYQ-Atk_Ra4gZ59jwHzq49DRtzHyOZczT7m9I-q5qYF6jOGU141FC9QLXshg8ot0d1Mc4AIkA",
+							"type": "string"
+						},
+						{
+							"key": "clientId",
+							"value": "yo70ud3k7HMIkzgbIDu08QJTL9TtemoRramM9z-Mnp0",
+							"type": "string"
+						},
+						{
+							"key": "client_authentication",
+							"value": "header",
+							"type": "string"
+						},
+						{
+							"key": "authUrl",
+							"value": "https://localhost/authserver/oauth2/authorize?aud=https://localhost/fhir/r4",
+							"type": "string"
+						},
+						{
+							"key": "redirect_uri",
+							"value": "https://webserver/authserver/csp/sys/oauth2/OAuth2.Response.cls",
+							"type": "string"
+						},
+						{
+							"key": "accessTokenUrl",
+							"value": "https://localhost/authserver/oauth2/token",
+							"type": "string"
+						},
+						{
+							"key": "useBrowser",
+							"value": false,
+							"type": "boolean"
+						},
+						{
+							"key": "state",
+							"value": "abc",
+							"type": "string"
+						},
+						{
+							"key": "addTokenTo",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://{{irishost}}/fhir/r4/Patient",
+					"protocol": "https",
+					"host": [
+						"{{irishost}}"
+					],
+					"path": [
+						"fhir",
+						"r4",
+						"Patient"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "irishost",
+			"value": "localhost"
+		},
+		{
+			"key": "irisport",
+			"value": "32783"
+		},
+		{
+			"key": "port",
+			"value": ""
+		}
+	]
+}

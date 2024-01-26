@@ -1,0 +1,76 @@
+version: '3.6'
+services:
+  openldap:
+    image: osixia/openldap:latest
+    container_name: openldap-server
+    environment:
+      LDAP_ORGANISATION: "InterSystems Iberia - Developer Community"
+      LDAP_DOMAIN: "devcom.com"
+      LDAP_BASE_DN: "dc=devcom,dc=com"
+      LDAP_ADMIN_PASSWORD: "StrongAdminPassw0rd"
+    networks:
+      - workshop-network
+    ports:
+      - "389:389"
+      - "636:636"
+    # For replication to work correctly, domainname and hostname must be
+    # set correctly so that "hostname"."domainname" equates to the
+    # fully-qualified domain name for the host.
+    #domainname: "example.org"
+    hostname: "ldap.devcom.com"
+  phpldapadmin:
+    image: osixia/phpldapadmin:latest
+    container_name: phpldapadmin
+    environment:
+      PHPLDAPADMIN_LDAP_HOSTS: "ldap.devcom.com"
+      #PHPLDAPADMIN_HTTPS: "false"
+    networks:
+        - workshop-network
+    ports:
+      - "10080:80"
+      - "10443:443"
+    hostname: "phpldapadmin-service"
+    depends_on:
+      - openldap
+  iris:
+    hostname: iris
+    build: 
+      context: iris
+      dockerfile: Dockerfile
+    restart: always
+    container_name: iris
+    networks:
+      - workshop-network
+    ports: 
+      - 32782:1972
+      - 32783:52773
+      - 32784:53773
+    volumes:
+      - ./irisdev:/irisdev
+    command: 
+      - -a
+      - iris session iris -U%SYS '##class(Security.Users).UnExpireUserPasswords("*")' && iris session iris -U%SYS '##class(Security.SSLConfigs).Import("/home/irisowner/irisdev/ssl/SSLConfigsExport.xml")'
+      - --check-caps false
+  webserver:
+    hostname: webserver
+    build:
+      context: webserver
+      dockerfile: Dockerfile
+    container_name: webserver
+    init: true
+    depends_on:
+      - iris
+    networks:
+      - workshop-network
+    ports:
+    - "80:80"
+    - "443:443"
+    volumes:
+    - ./webserver:/webserver
+    environment:
+    - ISC_DATA_DIRECTORY=/webserver
+
+
+networks:
+  workshop-network:
+    name: workshop-network
